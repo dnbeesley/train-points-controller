@@ -1,6 +1,5 @@
 #include <Wire.h>
 #define DELAY_INTERVAL 500
-#define DEBUG 1
 
 uint8_t pins[14] = {
     A0,
