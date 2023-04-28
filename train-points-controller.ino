@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <Wire.h>
 #define DELAY_INTERVAL 500
 
@@ -29,7 +30,7 @@ void setup() {
   
   Wire.begin(0x40);
   Wire.onReceive(setState);
-  # ifdef DEBUG
+  # ifdef _DEBUG
   Serial.begin(9600);
   Serial.println("Listening on 0x40");
   # endif
@@ -50,7 +51,7 @@ void loop() {
   diff = (state ^ newState) & newState;
   do {
     if ((diff & 0x1) != 0x0) {
-      # ifdef DEBUG
+      # ifdef _DEBUG
       Serial.print("Sending pulse to pin: ");
       Serial.println(pinIndex, HEX);
       # endif
@@ -60,7 +61,7 @@ void loop() {
       digitalWrite(pins[pinIndex], LOW);
       delay(DELAY_INTERVAL);
 
-      # ifdef DEBUG
+      # ifdef _DEBUG
       Serial.println("End of pulse");
       # endif
     }
@@ -75,7 +76,7 @@ void loop() {
 void setState(int available) {
   uint8_t *newStatePtr = (uint8_t*)&newState;
 
-  # ifdef DEBUG
+  # ifdef _DEBUG
   Serial.print("Received: ");
   Serial.print(available, HEX);
   Serial.println(" bytes");
